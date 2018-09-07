@@ -6,9 +6,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
+    <com.example.administrator.zoushitu.TrendScrollViewWidget
+        android:id="@+id/scroll_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars="none">
     <com.example.administrator.zoushitu.ChartView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
     />
+    </com.example.administrator.zoushitu.TrendScrollViewWidget>
+
 </LinearLayout>

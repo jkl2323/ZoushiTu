@@ -58,7 +58,7 @@ public class ChartView extends View {
         this.mDeltaX=this.mDeltaY;
         ballList.clear();
         initLinePaint();
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 40; i++) {
             String[] str=new String[10];
             for (int j = 0; j < 10; j++) {
                 str[j]=String.valueOf(j);
@@ -80,7 +80,25 @@ public class ChartView extends View {
         choseList.add(9);
         choseList.add(3);
         choseList.add(3);
-        choseList.add(14);
+        choseList.add(5);
+        for (int i = 0; i < 10; i++) {
+            choseList.add(i);
+        }
+        for (int i = 0; i < 10; i++) {
+            choseList.add(i);
+        }
+        for (int i = 0; i < 10; i++) {
+            choseList.add(i);
+        }
+        for (int i = 0; i < 10; i++) {
+            choseList.add(i);
+        }
+        for (int i = 0; i < 10; i++) {
+            choseList.add(i);
+        }
+        for (int i = 0; i < 10; i++) {
+            choseList.add(i);
+        }
     }
 
     private void initLinePaint() {
@@ -124,13 +142,13 @@ public class ChartView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension((int) ((mRedNum) * mDeltaX), (int) (16 * mDeltaY));
+        setMeasuredDimension((int) ((mRedNum) * mDeltaX), (int) (40 * mDeltaY));
         //取得测量之后当前View的宽度
         this.mWidth = getMeasuredWidth();
         //取得测量之后当前View的高度
         this.mHeight = getMeasuredHeight();
         //重新绘制,不重绘,不会生效;
-//        invalidate();
+        invalidate();
     }
 
 
@@ -155,7 +173,7 @@ public class ChartView extends View {
         }
     }
     private void drawText(Canvas canvas) {
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 40; i++) {
             Integer choseNumber = choseList.get(i);
             for (int j = 0; j < 10; j++) {
                 float x=mDeltaX*j+(mDeltaX/2);
@@ -174,7 +192,7 @@ public class ChartView extends View {
         for (int i = 0; i < 10; i++) {//画y轴
             canvas.drawLine(mDeltaX*i,0,mDeltaX*i,mHeight,mPaintLine);
         }
-        for (int i = 0; i < 16; i++) {//画x轴
+        for (int i = 0; i < 40; i++) {//画x轴
             canvas.drawLine(0,mDeltaY*i,mWidth,mDeltaY*i,mPaintLine);
         }
 
