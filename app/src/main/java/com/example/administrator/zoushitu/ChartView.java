@@ -30,7 +30,6 @@ public class ChartView extends View {
     private int mHeight;
     ArrayList<String[]> ballList=new ArrayList<>();
     ArrayList<Integer> choseList=new ArrayList<>();
-    ArrayList<PointRecord> list_data=new ArrayList<>();
     private Paint mPaintLine;
     private Paint mPaintBall;
     private Paint mPaintText;
@@ -188,53 +187,5 @@ public class ChartView extends View {
     public int getScreenDenisty(){
         DisplayMetrics dm=getResources().getDisplayMetrics();
         return dm.densityDpi;
-    }
-    private class PointRecord{//记录圆圈左右坐标
-
-        private float[] left;
-        private float[] right;
-        private float[] top;
-        private float[] bottom;
-        private int numbers;//选中的号码
-
-        public float[] getLeft() {
-            return left;
-        }
-
-        public void setLeft(float[] left) {
-            this.left = left;
-        }
-
-        public float[] getRight() {
-            return right;
-        }
-
-        public void setRight(float[] right) {
-            this.right = right;
-        }
-
-        public float[] getTop() {
-            return top;
-        }
-
-        public void setTop(float[] top) {
-            this.top = top;
-        }
-
-        public float[] getBottom() {
-            return bottom;
-        }
-
-        public void setBottom(float[] bottom) {
-            this.bottom = bottom;
-        }
-
-        public int getNumbers() {
-            return numbers;
-        }
-
-        public void setNumbers(int numbers) {
-            this.numbers = numbers;
-        }
     }
 }
