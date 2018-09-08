@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 public class ChartView extends View {
     private int mBallWH;
     //红球个数:33个
-    private int mRedNum=33;
+    private int mRedNum=10;
 
     //蓝球个数:16个
     private int mBlueNum=16;
@@ -35,6 +36,8 @@ public class ChartView extends View {
     private Paint mPaintText;
     private Paint mPainTextBall;
     private Paint mPaintLinkLine;
+    private Paint mpainLayoutCommon;
+    private Paint mpainLayoutSpec;
 
     public ChartView(Context context) {
         super(context);
@@ -110,7 +113,7 @@ public class ChartView extends View {
         mPaintLine.setStrokeWidth(dpValue*0.6f/160);
 
         mPaintBall = new Paint();
-        mPaintBall.setColor(Color.RED);
+        mPaintBall.setColor(Color.parseColor("#BE944E"));
         mPaintBall.setAntiAlias(true);
 
 
@@ -131,11 +134,19 @@ public class ChartView extends View {
         mPainTextBall.setTextAlign(Paint.Align.CENTER);
 
         mPaintLinkLine=new Paint();
-        mPaintLinkLine.setColor(Color.GREEN);
+        mPaintLinkLine.setColor(Color.parseColor("#E7D7A1"));
         mPaintLinkLine.setTextSize((dpValue*12/160));
         mPaintLinkLine.setAntiAlias(true);
-        mPaintLinkLine.setStrokeWidth(8f);
+        mPaintLinkLine.setStrokeWidth(12f);
         mPaintLinkLine.setTextAlign(Paint.Align.CENTER);
+
+
+        mpainLayoutCommon = new Paint();
+        mpainLayoutCommon.setColor(Color.WHITE);
+
+        mpainLayoutSpec = new Paint();
+        mpainLayoutSpec.setColor(Color.parseColor("#F3EFE2"));
+
     }
 
 
@@ -189,6 +200,11 @@ public class ChartView extends View {
 
 
     private void drawXY(Canvas canvas) {
+
+        for (int i = 0; i < 40; i++) {
+            canvas.drawRect(0,mDeltaY*i,mWidth,mDeltaY*i+mDeltaY,i%2==0?mpainLayoutCommon:mpainLayoutSpec);
+        }
+
         for (int i = 0; i < 10; i++) {//画y轴
             canvas.drawLine(mDeltaX*i,0,mDeltaX*i,mHeight,mPaintLine);
         }
