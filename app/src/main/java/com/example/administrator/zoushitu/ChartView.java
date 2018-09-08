@@ -192,8 +192,11 @@ public class ChartView extends View {
                 if (choseNumber==j){
                 canvas.drawCircle(x,y,mDeltaX/2,mPaintBall);
                 }
-                float text_y = mPaintText.measureText(String.valueOf(i));
-                canvas.drawText(String.valueOf(j),x,y+(text_y/2),choseNumber==j?mPainTextBall:mPaintText);
+                Paint.FontMetrics fontMetrics = (choseNumber==j?mPainTextBall:mPaintText).getFontMetrics();
+                float top = fontMetrics.top;//为基线到字体上边框的距离,即上图中的top
+                float bottom = fontMetrics.bottom;//为基线到字体下边框的距离,即上图中的bottom
+                int baseLineY = (int) (y - top/2 - bottom/2);//基线中间点的y轴计算公式
+                canvas.drawText(String.valueOf(j),x,baseLineY,choseNumber==j?mPainTextBall:mPaintText);
             }
         }
     }
