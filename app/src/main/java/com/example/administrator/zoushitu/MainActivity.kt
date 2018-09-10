@@ -24,6 +24,14 @@ class MainActivity : AppCompatActivity() ,ScrollChangeCallback {
         btn_qian.setOnClickListener {
             chatview.setIndex(1)
         }
+        btn_hide.setOnClickListener {
+            chatview.isCombileLine=false;
+            chatview.updateUI()
+        }
+        btn_show.setOnClickListener {
+            chatview.isCombileLine=true
+            chatview.updateUI()
+        }
     }
 
     private fun initdata() {

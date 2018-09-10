@@ -38,6 +38,7 @@ public class ChartView extends View {
     private Paint mpainLayoutSpec;
     private ArrayList<OpenNumber> openlist;
     private int index = 0;// 号码格式如下 1,2,3,2,4  0表示万位 1表示千位 以此类推
+    private boolean isCombileLine=true;//是否需要连线 默认是需要的
 
     public ChartView(Context context) {
         super(context);
@@ -137,8 +138,9 @@ public class ChartView extends View {
 
     private void drawLin(Canvas canvas) {
         float[] lastOpen = null;
-      tag :  for (int i = 0; i < openlist.size(); i++) {
-             float y = mDeltaY * i + (mDeltaY / 2);
+        tag:
+        for (int i = 0; i < openlist.size(); i++) {
+            float y = mDeltaY * i + (mDeltaY / 2);
             if (openlist.get(i).getOpennumber().equals("等待开奖")) {
                 if (openlist.get(i).getOpennumber().equals("等待开奖")) {
                     Paint.FontMetrics fontMetrics = mPaintText.getFontMetrics();
@@ -146,17 +148,18 @@ public class ChartView extends View {
                     float bottom = fontMetrics.bottom;//为基线到字体下边框的距离,即上图中的bottom
                     int baseLineY = (int) (y - top / 2 - bottom / 2);//基线中间点的y轴计算公式
                     canvas.drawRect(0, mDeltaY * i, mWidth, mDeltaY * i + mDeltaY, i % 2 == 0 ? mpainLayoutCommon : mpainLayoutSpec);
-                    canvas.drawText("等待开奖", mWidth/2, baseLineY, mPaintText);
+                    canvas.drawText("等待开奖", mWidth / 2, baseLineY, mPaintText);
                     continue tag;
                 }
             }
             Integer choseNumber = Integer.valueOf(openlist.get(i).getOpennumber().split(",")[index]);
             for (int j = 0; j < 10; j++) {
                 float x = mDeltaX * j + (mDeltaX / 2);
-
                 if (choseNumber == j) {
                     if (null != lastOpen) {
-                        canvas.drawLine(lastOpen[0], lastOpen[1], x, y, mPaintLinkLine);
+                        if (isCombileLine) {//是否需要显示折线 如果是则显示出来
+                            canvas.drawLine(lastOpen[0], lastOpen[1], x, y, mPaintLinkLine);
+                        }
                     }
                     lastOpen = new float[2];
                     lastOpen[0] = x;
@@ -200,10 +203,12 @@ public class ChartView extends View {
         }
 
     }
-    public void setIndex(int index){
-        this.index=index;
+
+    public void setIndex(int index) {
+        this.index = index;
         invalidate();
     }
+
     /**
      * 获取当前屏幕的密度
      *
@@ -215,28 +220,42 @@ public class ChartView extends View {
     }
 
 
-    public  String getTestData() {
-        String str="";
+    public String getTestData() {
+        String str = "";
         Random ran = new Random();
-        while (!IsLen(str)){
-            int data=ran.nextInt(10);
-            if (!IsContain(str,data)){
-                str+=data+",";
+        while (!IsLen(str)) {
+            int data = ran.nextInt(10);
+            if (!IsContain(str, data)) {
+                str += data + ",";
             }
 
         }
         return str;
     }
-    private  boolean IsContain(String str,int data){
-        if ("".equals(str))return false;
+
+    private boolean IsContain(String str, int data) {
+        if ("".equals(str)) return false;
         String[] split = str.split(",");
         for (int i = 0; i < split.length; i++) {
-            if (Integer.valueOf(split[i])==data)return true;
+            if (Integer.valueOf(split[i]) == data) return true;
         }
         return false;
     }
-    private static boolean IsLen(String data){
-        if (data.split(",").length>=5)return true;
-            return false;
+
+    private static boolean IsLen(String data) {
+        if (data.split(",").length >= 5) return true;
+        return false;
+    }
+
+    public boolean isCombileLine() {
+        return isCombileLine;
+    }
+
+    public void setCombileLine(boolean combileLine) {
+        isCombileLine = combileLine;
+    }
+
+    public void updateUI() {
+        invalidate();
     }
 }
