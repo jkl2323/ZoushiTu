@@ -6,12 +6,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <Button
+        android:id="@+id/btn_wan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="万位"
+        />
+    <Button
+        android:id="@+id/btn_qian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="千位"
+        />
+    </LinearLayout>
     <com.example.administrator.zoushitu.TrendScrollViewWidget
         android:id="@+id/scroll_content"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:scrollbars="none">
     <com.example.administrator.zoushitu.ChartView
+        android:id="@+id/chatview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
