@@ -1,4 +1,4 @@
-package com.example.administrator.zoushitu;
+package com.example.administrator.zoushitu.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,15 +10,15 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
+import com.example.administrator.zoushitu.OpenNumber;
+import com.example.administrator.zoushitu.R;
+
 import java.util.ArrayList;
 import java.util.Random;
 
-public class ChartView extends View {
+public class LeftView extends View {
     private int mBallWH;
-    //红球个数:33个
     private int mRedNum = 10;
-
-    //蓝球个数:16个
     private int mBlueNum = 16;
     //网格的水平间距
     private float mDeltaX;
@@ -38,21 +38,21 @@ public class ChartView extends View {
     private Paint mpainLayoutSpec;
     private ArrayList<OpenNumber> openlist;
     private int index = 0;// 号码格式如下 1,2,3,2,4  0表示万位 1表示千位 以此类推
-    private boolean isCombileLine=true;//是否需要连线 默认是需要的
-    public static String Tag="tag";
-    private int heji=0;//合计
+    private boolean isCombileLine = true;//是否需要连线 默认是需要的
+    public static String Tag = "tag";
+    private int heji = 0;//合计
 
-    public ChartView(Context context) {
+    public LeftView(Context context) {
         super(context);
         init();
     }
 
-    public ChartView(Context context, @Nullable AttributeSet attrs) {
+    public LeftView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public ChartView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public LeftView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -114,8 +114,8 @@ public class ChartView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        if (null==openlist)return;
-        setMeasuredDimension((int) ((mRedNum) * mDeltaX), (int) ((openlist.size()+heji) * mDeltaY));
+        if (null == openlist) return;
+        setMeasuredDimension((int) (mDeltaX), (int) ((openlist.size() + heji) * mDeltaY));
         //取得测量之后当前View的宽度
         this.mWidth = getMeasuredWidth();
         //取得测量之后当前View的高度
@@ -129,8 +129,9 @@ public class ChartView extends View {
         requestLayout();
         invalidate();
     }
-    public void setHeji(int heji){
-        this.heji=heji;
+
+    public void setHeji(int heji) {
+        this.heji = heji;
     }
 
     @Override
@@ -177,44 +178,44 @@ public class ChartView extends View {
 
     private void drawText(Canvas canvas) {
         tag:
-        for (int i = 0; i < openlist.size()+heji; i++) {
+        for (int i = 0; i < openlist.size() + heji; i++) {
             for (int j = 0; j < 10; j++) {
                 float x = mDeltaX * j + (mDeltaX / 2);
                 float y = mDeltaY * i + (mDeltaY / 2);
-               if (i<openlist.size()){
-                   if (openlist.get(i).getOpennumber().equals("等待开奖")) {
-                       continue tag;
-                   }
-                   Integer choseNumber = Integer.valueOf(openlist.get(i).getOpennumber().split(",")[index]);
-                   if (choseNumber == j) {
-                       canvas.drawCircle(x, y, mDeltaX / 2, mPaintBall);
-                   }
-                   Paint.FontMetrics fontMetrics = (choseNumber == j ? mPainTextBall : mPaintText).getFontMetrics();
-                   float top = fontMetrics.top;//为基线到字体上边框的距离,即上图中的top
-                   float bottom = fontMetrics.bottom;//为基线到字体下边框的距离,即上图中的bottom
-                   int baseLineY = (int) (y - top / 2 - bottom / 2);//基线中间点的y轴计算公式
-                   canvas.drawText(String.valueOf(j), x, baseLineY, choseNumber == j ? mPainTextBall : mPaintText);
-               }else {
-                   Paint.FontMetrics fontMetrics =  mPaintText.getFontMetrics();
-                   float top = fontMetrics.top;//为基线到字体上边框的距离,即上图中的top
-                   float bottom = fontMetrics.bottom;//为基线到字体下边框的距离,即上图中的bottom
-                   int baseLineY = (int) (y - top / 2 - bottom / 2);//基线中间点的y轴计算公式
-                   canvas.drawText(String.valueOf(j), x, baseLineY, mPaintText);
-               }
+                if (i < openlist.size()) {
+                    if (openlist.get(i).getOpennumber().equals("等待开奖")) {
+                        continue tag;
+                    }
+                    Integer choseNumber = Integer.valueOf(openlist.get(i).getOpennumber().split(",")[index]);
+                    if (choseNumber == j) {
+                        canvas.drawCircle(x, y, mDeltaX / 2, mPaintBall);
+                    }
+                    Paint.FontMetrics fontMetrics = (choseNumber == j ? mPainTextBall : mPaintText).getFontMetrics();
+                    float top = fontMetrics.top;//为基线到字体上边框的距离,即上图中的top
+                    float bottom = fontMetrics.bottom;//为基线到字体下边框的距离,即上图中的bottom
+                    int baseLineY = (int) (y - top / 2 - bottom / 2);//基线中间点的y轴计算公式
+                    canvas.drawText(String.valueOf(j), x, baseLineY, choseNumber == j ? mPainTextBall : mPaintText);
+                } else {
+                    Paint.FontMetrics fontMetrics = mPaintText.getFontMetrics();
+                    float top = fontMetrics.top;//为基线到字体上边框的距离,即上图中的top
+                    float bottom = fontMetrics.bottom;//为基线到字体下边框的距离,即上图中的bottom
+                    int baseLineY = (int) (y - top / 2 - bottom / 2);//基线中间点的y轴计算公式
+                    canvas.drawText(String.valueOf(j), x, baseLineY, mPaintText);
+                }
             }
         }
     }
 
 
     private void drawXY(Canvas canvas) {
-
-        for (int i = 0; i < openlist.size()+heji; i++) {//画x轴
+        for (int i = 0; i < openlist.size() + heji; i++) {//画x轴
             canvas.drawRect(0, mDeltaY * i, mWidth, mDeltaY * i + mDeltaY, i % 2 == 0 ? mpainLayoutCommon : mpainLayoutSpec);
             canvas.drawLine(0, mDeltaY * i, mWidth, mDeltaY * i, mPaintLine);
         }
-        for (int i = 0; i < 11; i++) {//画y轴
+        for (int i = 0; i < 2; i++) {//画y轴
             canvas.drawLine(mDeltaX * i, 0, mDeltaX * i, mHeight, mPaintLine);
         }
+
     }
 
     public void setIndex(int index) {

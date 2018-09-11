@@ -5,8 +5,8 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!--走势图中双色球的宽高-->
-    <dimen name="trend_ball_wh">16.66666666666667dp</dimen>
-    <dimen name="item_wh">33.33333333333333dp</dimen>
+    <dimen name="trend_ball_wh">16dp</dimen>
+    <dimen name="item_wh">32dp</dimen>
     <dimen name="footer_itemwh">25dp</dimen>
 
 
