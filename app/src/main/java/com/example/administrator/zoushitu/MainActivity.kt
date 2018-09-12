@@ -60,27 +60,6 @@ class MainActivity : FragmentActivity() {
             chatview.setIndex(0)
 
         }
-        btn_qian.setOnClickListener {
-            chatview.setIndex(1)
-        }
-        btn_hide.setOnClickListener {
-            chatview.isCombileLine = false
-            chatview.updateUI()
-        }
-        btn_show.setOnClickListener {
-            chatview.isCombileLine = true
-            chatview.updateUI()
-        }
-        btn_heji_hide.setOnClickListener {
-            chatview.setHeji(0)
-            chatview.requestLayout()
-            chatview.updateUI()
-        }
-        btn_heji_show.setOnClickListener {
-            chatview.setHeji(3)
-            chatview.requestLayout()
-            chatview.updateUI()
-        }
         scroll_content.viewTreeObserver.addOnGlobalLayoutListener {
             scroll_content.fullScrollV(View.FOCUS_DOWN)
         }

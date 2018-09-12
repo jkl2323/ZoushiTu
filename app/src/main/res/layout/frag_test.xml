@@ -69,6 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_wh"
         android:orientation="horizontal"
+        android:background="#d5e7ec"
         >
 
         <TextView
@@ -89,6 +90,7 @@
                 android:id="@+id/trend_header_scroll"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/item_wh"
+                android:background="#d5e7ec"
                 android:scrollbars="none">
 
                 <LinearLayout
