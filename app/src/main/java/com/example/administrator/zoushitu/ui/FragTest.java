@@ -41,6 +41,11 @@ public class FragTest extends android.support.v4.app.Fragment implements ScrollC
     private LeftNumberSynchScrollView scroll_left;
     private HeaderHorizontalScrollView trend_header_scroll;
     int index=0;
+    private MyAdapter myAdapter;
+    private MyAdapter adapter;
+    private HeadCustomGridView grid_trend_header;
+    private LeftNumberCustomListView lv_number;
+
     @SuppressLint("ValidFragment")
     public FragTest(int index){
     this.index=index;
@@ -71,8 +76,8 @@ public class FragTest extends android.support.v4.app.Fragment implements ScrollC
         TextView tv_page=view.findViewById(R.id.tv_page);
         Log.w(ChartView.Tag,"打印当前页面"+index);
         tv_page.setText("当前页面"+index);
-        LeftNumberCustomListView lv_number=view.findViewById(R.id.lv_number);
-        HeadCustomGridView grid_trend_header=view.findViewById(R.id.grid_trend_header);
+        lv_number = view.findViewById(R.id.lv_number);
+        grid_trend_header = view.findViewById(R.id.grid_trend_header);
         mLeftItemH = getResources().getDimensionPixelSize(R.dimen.item_wh);
         chatview = view.findViewById(R.id.chatview);
         for (int i = 0; i <120 ; i++) {
@@ -86,12 +91,12 @@ public class FragTest extends android.support.v4.app.Fragment implements ScrollC
         chatview.setData(list);
 
 
-        MyAdapter myAdapter = new MyAdapter(R.layout.items, qihaoList, mLeftItemH);
+        myAdapter = new MyAdapter(R.layout.items, qihaoList, mLeftItemH);
         lv_number.setAdapter(myAdapter);
         for (int i = 0; i < 10; i++) {
             tishi.add(String.valueOf(i));
         }
-        MyAdapter adapter = new MyAdapter(R.layout.gridview_item, tishi, mLeftItemH);
+        adapter = new MyAdapter(R.layout.gridview_item, tishi, mLeftItemH);
         int deltaDp = getResources().getDimensionPixelSize(R.dimen.item_wh);
         //下面的代码是重新定位布局参数;让gridView数据都显示在一行;
         LinearLayout.LayoutParams params =new  LinearLayout.LayoutParams(adapter.getCount() * deltaDp,
@@ -101,6 +106,7 @@ public class FragTest extends android.support.v4.app.Fragment implements ScrollC
         grid_trend_header.setStretchMode(GridView.NO_STRETCH);  //伸展模式
         grid_trend_header.setNumColumns(adapter.getCount()); //共有多少列
         grid_trend_header.setAdapter(adapter);
+
         scroll_content.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -113,8 +119,19 @@ public class FragTest extends android.support.v4.app.Fragment implements ScrollC
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.w(ChartView.Tag,index+"页面销毁中");
+        chatview.release();
+        myAdapter.release();
+        adapter.release();
+        lv_number.setAdapter(null);
+        grid_trend_header.setAdapter(null);
         chatview=null;
+        myAdapter=null;
+        adapter=null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     private void setlistener() {
@@ -185,6 +202,10 @@ public class FragTest extends android.support.v4.app.Fragment implements ScrollC
 
                 return data.size();
         }
+        public void release(){
+            data.clear();
+            notifyDataSetChanged();
+        }
 
         @Override
         public Object getItem(int position) {
@@ -234,6 +255,7 @@ public class FragTest extends android.support.v4.app.Fragment implements ScrollC
 
                 }
             } else {
+                System.out.println("查看缓存机制");
                 holder = (ViewHolder) convertView.getTag();
             }
             holder.tv_content.setText(data.get(position));

@@ -34,6 +34,9 @@ class MainActivity : FragmentActivity() {
 
         mpager.adapter=SsAdapter(supportFragmentManager)
 
+        val maxMemory = (Runtime.getRuntime().maxMemory() / 1024/1024).toInt()
+        Log.d(ChartView.Tag, "Max memory is " + maxMemory + "M");
+
 
     }
 

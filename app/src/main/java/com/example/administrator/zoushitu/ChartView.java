@@ -141,6 +141,10 @@ public class ChartView extends View {
         drawLin(canvas);
         drawText(canvas);
     }
+    public void release(){
+        openlist.clear();
+        openlist=null;
+    }
 
     private void drawLin(Canvas canvas) {
         float[] lastOpen = null;
